@@ -1,15 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-//CLass of Node
-
 class Node{
-    
     public:
 
     int data;
     Node *next;
 
+    //Constructor
     Node(int data1,Node *next1)
     {
         data=data1;
@@ -19,26 +17,37 @@ class Node{
     Node(int data1)
     {
         data=data1;
-        next=0;
+        next=nullptr;
     }
 
 };
 
-//Brute force solution
-void *brute(Node *head)
+//Print the Linked List
+void print(Node *head)
 {
-    int cnt=0;
+    Node *temp=head;
+    while(temp!=0)
+    {
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+
+//Brute Force Solution
+Node *brute(Node *head)
+{
+    int count=0;
     Node *temp=head;
 
     while(temp!=0)
     {
-        cnt++;
+        count++;
         temp=temp->next;
     }
 
-    int mid=(cnt/2)+1;
+    int mid=(count/2)+1;
     temp=head;
-
     while(temp!=0)
     {
         mid=mid-1;
@@ -46,26 +55,37 @@ void *brute(Node *head)
             break;
         temp=temp->next;
     }
-    cout<<temp->data;
+    return temp;
 }
 
 
 //Optimal Solution
 Node *optimal(Node *head)
 {
-    
+    Node *slow=head;
+    Node *fast=head;
+
+    while(fast!=0 && fast->next!=0)
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    return slow;
 }
 
 int main()
 {
-    Node *head=new Node(11);
-    head->next=new Node(22);
-    head->next->next=new Node(33);
-    head->next->next->next=new Node(44);
-    head->next->next->next->next=new Node(55);
-    head->next->next->next->next->next=new Node(66);
+    Node *head=new Node(1);
+    head->next=new Node(2);
+    head->next->next=new Node(3);
+    head->next->next->next=new Node(4);
+    head->next->next->next->next=new Node(5);
+    head->next->next->next->next->next=new Node(6);
+    
+    
+    // Node *ans=brute(head);
+    Node *ans =optimal(head);
+    cout<<ans->data;
 
 
-    brute(head);
 }
-
