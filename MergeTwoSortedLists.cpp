@@ -1,8 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-class Node{
-
+class Node
+{
     public:
     int data;
     Node *next;
@@ -20,12 +20,10 @@ class Node{
     }
 };
 
-
-//Print the Linked List
+//Print the linked List
 void print(Node *head)
 {
     Node *temp=head;
-
     while(temp!=0)
     {
         cout<<temp->data<<" ";
@@ -34,25 +32,26 @@ void print(Node *head)
     cout<<endl;
 }
 
-//Convert ARRAY into Linked List
-Node *convert(vector<int> &arr)
+//Convert Array into Linked List
+Node *convert(vector<int> arr)
 {
-    Node *head=new Node(-1);
-    Node *temp=head;
+    Node *dummy=new Node(-1);
+    Node *temp=dummy;
 
     for(int i=0;i<arr.size();i++)
     {
-        temp->data=arr[i];
+        temp->next=new Node(arr[i]);
         temp=temp->next;
     }
-    return head->next;
+    return dummy->next;
 }
+
 
 //Brute Force Solution
 Node *brute(Node *list1,Node *list2)
 {
-    Node *temp1=list1;
-    vector<int> arr;
+    vector<int>arr;
+    Node *temp1=list1,*temp2=list2;
 
     while(temp1!=0)
     {
@@ -60,7 +59,6 @@ Node *brute(Node *list1,Node *list2)
         temp1=temp1->next;
     }
 
-    Node *temp2=list2;
     while(temp2!=0)
     {
         arr.push_back(temp2->data);
@@ -68,47 +66,40 @@ Node *brute(Node *list1,Node *list2)
     }
 
     sort(arr.begin(),arr.end());
-    for(auto it:arr)
-    {
-        cout<<it<<"  ";
-    }
-   
     Node *head=convert(arr);
     return head;
-
 }
 
 
 //Optimal Solution
 Node *optimal(Node *list1,Node *list2)
 {
+    Node *t1=list1,*t2=list2;
     Node *dummy=new Node(-1);
     Node *temp=dummy;
 
-    Node *temp1=list1,*temp2=list2;
-    while(temp1!=0 && temp2!=0)
+    while(t1!=0 && t2!=0)
     {
-        if(temp1->data<=temp2->data)
+        if(t1->data<=t2->data)
         {
-            temp->next=temp1;
-            temp=temp1;
-            temp1=temp1->next;
+            temp->next=t1;
+            temp=t1;
+            t1=t1->next;
         }
         else
         {
-            temp->next=temp2;
-            temp=temp2;
-            temp2=temp2->next;
+            temp->next=t2;
+            temp=t2;
+            t2=t2->next;
         }
     }
 
-    if(temp1) temp->next=temp1;
-    else    temp->next=temp2;
+    if(t1)temp->next=t1;
+    else    temp->next=t2;
 
     return dummy->next;
 
 }
-
 
 int main()
 {
@@ -116,20 +107,17 @@ int main()
     list1->next=new Node(4);
     list1->next->next=new Node(8);
     list1->next->next->next=new Node(10);
-
     print(list1);
 
-   Node *list2=new Node(1);
+    Node *list2=new Node(1);
     list2->next=new Node(3);
     list2->next->next=new Node(3);
     list2->next->next->next=new Node(6);
     list2->next->next->next->next=new Node(11);
     list2->next->next->next->next->next=new Node(14);
-
     print(list2);
 
-    // Node *newhead=brute(list1,list2);
-    Node *newhead=optimal(list1,list2);
-    print(newhead);
-
+    // Node *newHead=brute(list1,list2);
+    Node *newHead=optimal(list1,list2);
+    print(newHead);
 }
