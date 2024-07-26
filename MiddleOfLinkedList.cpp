@@ -51,7 +51,10 @@ void *brute(Node *head)
 
 
 //Optimal Solution
-
+Node *optimal(Node *head)
+{
+    
+}
 
 int main()
 {
