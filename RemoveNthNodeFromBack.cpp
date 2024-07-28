@@ -74,7 +74,8 @@ Node *brute(Node *head,int n)
     return head;
 }
 
-//Optimaal Solution
+
+//Optimal Solution
 Node *optimal(Node *head,int n)
 {
     if(head==0 || head->next==0)
@@ -107,6 +108,8 @@ Node *optimal(Node *head,int n)
     free(delnode);
     return head;
 }
+
+
 
 int main()
 {
